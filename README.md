@@ -1,1 +1,1 @@
-# lite-datatable
+# lite-datatable-js
