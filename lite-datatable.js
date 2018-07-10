@@ -1,4 +1,8 @@
 /**
+ * Lite Datatable 1.0
+ * https://github.com/joaofbvieira/lite-datatable-js
+ * Copyright (c) 2018 João Pedro Vieira
+ * 
  * Requirements:
  *      jquery.1.4+
  * 
@@ -20,16 +24,17 @@
  *      showRecordsPerPage : (Set the visibility of configuration of lines per page. Type BOOL. DEFAULT true)
  *      showSearchInput : (Set the visibility of input search. Type BOOL. DEFAULT true)
  *      cssClassForRecordsPerPageContainer : (Set the CSS class to div container of records per page. Type STRING. DEFAULT '')
+ *      cssClassForLabelRecordsPerPage : (Set the CSS class to label of records per page. Type STRING. DEFAULT '')
+ *      cssClassForSelectRecordsPerPage : (Set the CSS class to select field of records per page. Type STRING. DEFAULT '')
  *      cssClassForSearchTextContainer : (Set the CSS class to div container of input search. Type STRING. DEFAULT '')
- * 
- * Applying custom style:
- *      'liteDataTable-divContainer-top' : (DIV container for TOP elements (records per page and input search))
- *      'liteDataTable-divContainer-bottom' : (DIV container for BOTTOM elements (buttons for pagination))
- *      'liteDataTable-btn-firstPage' : (Button to First Page)
- *      'liteDataTable-btn-previousPage' : (Button to Previous Page)
- *      'liteDataTable-span-currentPage' : (Span that displays current page and total of pages)
- *      'liteDataTable-btn-nextPage' : (Button to Next Page)
- *      'liteDataTable-btn-lastPage' : (Button to Last Page)
+ *      cssClassForInputSearch : (Set the CSS class to input of search text. Type STRING. DEFAULT '')
+ *      cssClassForContainerTopFields : (Set the CSS class to div container for TOP elements (records per page and input search). Type STRING. DEFAULT '')
+ *      cssClassForContainerBottomFields : (Set the CSS class to div container for BOTTOM elements (buttons for pagination). Type STRING. DEFAULT '')
+ *      cssClassForButtonFirstPage : (Set the CSS class to button First Page. Type STRING. DEFAULT '')
+ *      cssClassForButtonPreviousPage : (Set the CSS class to button Previous Page. Type STRING. DEFAULT '')
+ *      cssClassForButtonNextPage : (Set the CSS class to button Next Page. Type STRING. DEFAULT '')
+ *      cssClassForButtonLastPage : (Set the CSS class to button Last Page. Type STRING. DEFAULT '')
+ *      cssClassForSpanCurrentPage : (Set the CSS class to span that displays current page and total of pages. Type STRING. DEFAULT '')
  */
 
 function LiteDataTable() {
@@ -63,6 +68,16 @@ function LiteDataTable() {
     this.showSearchInput = true;
     this.cssClassForRecordsPerPageContainer = '';
     this.cssClassForSearchTextContainer = '';
+    this.cssClassForContainerTopFields = '';
+    this.cssClassForContainerBottomFields = '';
+    this.cssClassForButtonFirstPage = '';
+    this.cssClassForButtonPreviousPage = '';
+    this.cssClassForButtonNextPage = '';
+    this.cssClassForButtonLastPage = '';
+    this.cssClassForSpanCurrentPage = '';
+    this.cssClassForInputSearch = '';
+    this.cssClassForSelectRecordsPerPage = '';
+    this.cssClassForLabelRecordsPerPage = '';
 }
 
 LiteDataTable.prototype.init = (function (dataParam) {
@@ -230,12 +245,12 @@ LiteDataTable.prototype.getBottomComponentHTML = (function () {
         disabledNextButton = 'disabled="disabled"';
     }
 
-    strHTML = ' <div class="liteDataTable-divContainer-bottom" style="width: 100%; margin-top: 10px;"> \
-                    <button class="liteDataTable-btn-firstPage ' + this.firstPageClass + ' btn btn-default" disabled="disabled"> ' + this.captionButtonFirstPage + ' </button> \
-                    <button class="liteDataTable-btn-previousPage ' + this.previousPageClass + ' btn btn-default" disabled="disabled"> ' + this.captionButtonPreviousPage + ' </button> \
-                    <span class="liteDataTable-span-currentPage ' + this.currentPageClass + ' btn btn-primary" style="cursor: default !important;"> 1 / ' + this.numberOfPages + ' </span> \
-                    <button class="liteDataTable-btn-nextPage ' + this.nextPageClass + ' btn btn-default" ' + disabledNextButton + '> ' + this.captionButtonNextPage + ' </button> \
-                    <button class="liteDataTable-btn-lastPage ' + this.lastPageClass + ' btn btn-default" ' + disabledNextButton + '> ' + this.captionButtonLastPage + ' </button> \
+    strHTML = ' <div class="' + this.cssClassForContainerBottomFields + '" > \
+                    <a class="' + this.cssClassForButtonFirstPage + ' ' + this.firstPageClass + '" disabled="disabled"> ' + this.captionButtonFirstPage + ' </a> \
+                    <a class="' + this.cssClassForButtonPreviousPage + ' ' + this.previousPageClass + '" disabled="disabled"> ' + this.captionButtonPreviousPage + ' </a> \
+                    <span class="' + this.cssClassForSpanCurrentPage + ' ' + this.currentPageClass + '"> 1 / ' + this.numberOfPages + ' </span> \
+                    <a class="' + this.cssClassForButtonNextPage + ' ' + this.nextPageClass + '" ' + disabledNextButton + '> ' + this.captionButtonNextPage + ' </a> \
+                    <a class="' + this.cssClassForButtonLastPage + ' ' + this.lastPageClass + '" ' + disabledNextButton + '> ' + this.captionButtonLastPage + ' </a> \
                 </div>';
     
     return strHTML;
@@ -278,10 +293,26 @@ LiteDataTable.prototype.getTopComponentHTML = (function () {
         inlineStyleContainerSearchTextContainer = '';
     }
 
-    strHTML = ' <div class="liteDataTable-divContainer-top" style="width: 100%; margin-top: 10px; margin-bottom: 10px; height: 40px; ' + displayContainerTopHTML + '"> \
+    var inlineStyleContainerTopElements = 'width: 100%; margin-top: 10px; margin-bottom: 10px; height: 40px;';
+    if (self.cssClassForContainerTopFields != ''){
+        inlineStyleContainerTopElements = '';
+    }
+
+    var inlineStyleLabelSelectRecordsPerPage = 'float: left; vertical-align: middle; line-height: 35px;';
+    if (self.cssClassForLabelRecordsPerPage != ''){
+        inlineStyleLabelSelectRecordsPerPage = '';
+    }
+
+    var inlineStyleSelectRecordsPerPage = 'float: left; width: auto; margin-left: 5px;';
+    if (self.cssClassForSelectRecordsPerPage != ''){
+        inlineStyleSelectRecordsPerPage = '';
+    }
+
+
+    strHTML = ' <div class="' + self.cssClassForContainerTopFields + '" style="' + inlineStyleContainerTopElements + ' ' + displayContainerTopHTML + '"> \
                     <div class="' + self.cssClassForRecordsPerPageContainer + '" style="' + inlineStyleContainerRecordsPerPage + ' ' + displayRecordsPerPage + '"> \
-                        <span style="float: left; vertical-align: middle; line-height: 35px;">' + self.captionLabelRecordsPerPage + '</span> \
-                        <select class="' + self.selectRecordsPerPageClass + ' form-control" style="float: left; width: auto; margin-left: 5px;">';
+                        <span class="' + self.cssClassForLabelRecordsPerPage + '" style="' + inlineStyleLabelSelectRecordsPerPage + '">' + self.captionLabelRecordsPerPage + '</span> \
+                        <select class="' + self.cssClassForSelectRecordsPerPage + ' ' + self.selectRecordsPerPageClass + '" style="' + inlineStyleSelectRecordsPerPage + '">';
 
     $.each(self.optionsRecordsPerPage, function (index, item) {
         var optSelected = '';
@@ -295,7 +326,7 @@ LiteDataTable.prototype.getTopComponentHTML = (function () {
     strHTML += '        </select> \
                     </div> \
                     <div class="' + self.cssClassForSearchTextContainer + '" style="' + inlineStyleContainerSearchTextContainer + ' ' + displaySearchInput + '"> \
-                        <input type="text" class="' + self.searchTextClass + ' form-control" placeholder="' + self.captionSearchInput + '" /> \
+                        <input type="text" class="' + self.searchTextClass + ' ' + self.cssClassForInputSearch + '" placeholder="' + self.captionSearchInput + '" /> \
                     </div> \
                 </div> ';
     
