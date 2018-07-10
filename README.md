@@ -5,8 +5,6 @@ lite-datatable-js
 lite-datatable-js - A light-weight javascript lib to transform a HTML table into a DataTable.
 -------------------------------------------------------------------------------
 
-```
-
 
 **Notable Features**
    - Paging in HTML tables.
