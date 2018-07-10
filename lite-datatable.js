@@ -178,6 +178,76 @@ LiteDataTable.prototype.loadParameters = (function (config) {
     else {
         this.cssClassForSearchTextContainer = '';
     }
+
+    if (config.cssClassForLabelRecordsPerPage){
+        this.cssClassForLabelRecordsPerPage = config.cssClassForLabelRecordsPerPage;
+    }
+    else {
+        this.cssClassForLabelRecordsPerPage = '';
+    }
+
+    if (config.cssClassForSelectRecordsPerPage){
+        this.cssClassForSelectRecordsPerPage = config.cssClassForSelectRecordsPerPage;
+    }
+    else {
+        this.cssClassForSelectRecordsPerPage = '';
+    }
+
+    if (config.cssClassForInputSearch){
+        this.cssClassForInputSearch = config.cssClassForInputSearch;
+    }
+    else {
+        this.cssClassForInputSearch = '';
+    }
+
+    if (config.cssClassForContainerTopFields){
+        this.cssClassForContainerTopFields = config.cssClassForContainerTopFields;
+    }
+    else {
+        this.cssClassForContainerTopFields = '';
+    }
+
+    if (config.cssClassForContainerBottomFields){
+        this.cssClassForContainerBottomFields = config.cssClassForContainerBottomFields;
+    }
+    else {
+        this.cssClassForContainerBottomFields = '';
+    }
+
+    if (config.cssClassForButtonFirstPage){
+        this.cssClassForButtonFirstPage = config.cssClassForButtonFirstPage;
+    }
+    else {
+        this.cssClassForButtonFirstPage = '';
+    }
+
+    if (config.cssClassForButtonPreviousPage){
+        this.cssClassForButtonPreviousPage = config.cssClassForButtonPreviousPage;
+    }
+    else {
+        this.cssClassForButtonPreviousPage = '';
+    }
+
+    if (config.cssClassForButtonNextPage){
+        this.cssClassForButtonNextPage = config.cssClassForButtonNextPage;
+    }
+    else {
+        this.cssClassForButtonNextPage = '';
+    }
+
+    if (config.cssClassForButtonLastPage){
+        this.cssClassForButtonLastPage = config.cssClassForButtonLastPage;
+    }
+    else {
+        this.cssClassForButtonLastPage = '';
+    }
+
+    if (config.cssClassForSpanCurrentPage){
+        this.cssClassForSpanCurrentPage = config.cssClassForSpanCurrentPage;
+    }
+    else {
+        this.cssClassForSpanCurrentPage = '';
+    }
 });
 
 LiteDataTable.prototype.render = (function () {
@@ -193,7 +263,7 @@ LiteDataTable.prototype.render = (function () {
 
 LiteDataTable.prototype.configureTableLines = (function (){
     var self = this;
-    $(self.table).find('tbody tr:visible').addClass(self.tableLinesClass);
+    $(self.table).children("tbody").children("tr:visible").addClass(self.tableLinesClass);
 });
 
 LiteDataTable.prototype.bindDomEvents = (function (){
@@ -361,7 +431,7 @@ LiteDataTable.prototype.previousPage_onClick = (function (){
 });
 
 LiteDataTable.prototype.nextPage_onClick = (function (){
-    if (this.currentPage == this.numberOfPages){
+    if (this.currentPage >= this.numberOfPages){
         return false;
     }
 
@@ -409,19 +479,24 @@ LiteDataTable.prototype.setCurrentPage = (function (pageNumber) {
 LiteDataTable.prototype.updateCaptionAndStateOfPaginator = (function (){
     var self = this;
 
-    $('.' + self.currentPageClass).text(self.currentPage + ' / ' + self.numberOfPages);
+    if (self.numberOfPages == 0){
+        $('.' + self.currentPageClass).text('0 / 0');
+    }
+    else {
+        $('.' + self.currentPageClass).text(self.currentPage + ' / ' + self.numberOfPages);
+    }
 
     $('.' + self.firstPageClass).removeAttr('disabled');
     $('.' + self.previousPageClass).removeAttr('disabled');
     $('.' + self.nextPageClass).removeAttr('disabled');
     $('.' + self.lastPageClass).removeAttr('disabled');
 
-    if (self.currentPage == 1){
+    if (self.currentPage == 1 || self.numberOfPages == 0){
         $('.' + self.firstPageClass).attr('disabled', 'disabled');
         $('.' + self.previousPageClass).attr('disabled', 'disabled');
     }
 
-    if (self.currentPage == self.numberOfPages){
+    if (self.currentPage == self.numberOfPages || self.numberOfPages == 0){
         $('.' + self.nextPageClass).attr('disabled', 'disabled');
         $('.' + self.lastPageClass).attr('disabled', 'disabled');
     }
