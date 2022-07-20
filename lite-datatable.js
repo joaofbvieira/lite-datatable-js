@@ -1,7 +1,7 @@
 /**
  * Lite Datatable 1.0
  * https://github.com/joaofbvieira/lite-datatable-js
- * Copyright (c) 2018 João Pedro Vieira
+ * 2018 João Pedro Vieira
  * 
  * Requirements:
  *      jquery.1.4+
