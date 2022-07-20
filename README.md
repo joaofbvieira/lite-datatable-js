@@ -77,8 +77,3 @@ If you find that you need a feature that LiteDataTable does not currently suppor
 - `cssClassForButtonNextPage`  (string)  (Set the CSS class to button Next Page. DEFAULT '')
 - `cssClassForButtonLastPage`  (string)  (Set the CSS class to button Last Page. DEFAULT '')
 - `cssClassForSpanCurrentPage`  (string)  (Set the CSS class to span that displays current page and total of pages. DEFAULT '')
-
-
-## License
-
-Copyright (c) 2018 João Pedro Vieira.
